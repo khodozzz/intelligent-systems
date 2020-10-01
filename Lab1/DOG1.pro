@@ -9,32 +9,29 @@ predicates
 	nondeterm grandparent(name, name)
 	
 clauses
-	dog(CH) :- parent(P, CH), dog(P). %Parent, CHild
-
-	dog("reks").
-	dog("fat").
+	grandparent(GP, CH) :- 
+		parent(GP, P), parent(P, CH).	%GP is parent of parent of child 
 	
+	dog(CH) :- parent(P, CH), dog(P). 	%CH is dog if P his parent and dog
+	%dog("reks").
+	dog("fat").
 
 	parent("reks", "boss").
 	parent("reks", "jim").
-	
 	parent("boss", "jim").
 	parent("boss", "jek").
-
 	parent("jek", "sally").
-	
 	parent("sally", "bek").
-	
 	parent("fat", "jim").
 	parent("fat", "bek").
 	
-	grandparent(GP, CH) :- parent(GP, P), parent(P, CH). %GRandparent, Parent, CHild
+	
 goal
-	dog(DOG). 			%TODO: how to get unique vals 
+	dog(DOG). 			%TODO: get unique vals
 	
 	%parent(PARENT, _). 
 	
-	%parent(X, Z), parent(Z, Y). 	%TODO: how to hide Z, Y
+	%parent(X, Z), parent(Z, Y). 	%TODO: hide Z, Y or use next line
 	%grandparent(GRANDPARENT, _).
 	
 	%dog("bek").
