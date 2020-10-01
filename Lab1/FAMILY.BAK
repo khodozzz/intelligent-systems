@@ -11,16 +11,19 @@ clauses
 	man("man1").
 	man("child of man1").
 	man("grandson of man1").
+	man("husband of child of man1").
 	woman("wife of man1").
 	woman("granddaughter of man1").
 	married("man1", "wife of man1").
 	married("wife of man1", "man1").
+	married("husband of child of man1", "child of man1").
+	married("child of man1", "husband of child of man1").
 	parent("man1", "child of man1").
 	parent("child of man1", "grandson of man1").
 	parent("child of man1", "granddaughter of man1").
 	
 predicates
-	nondeterm mother(name, name)
+	nondeterm mother(name, name) 
 	nondeterm father(name, name)
 	
 	nondeterm husband(name, name)
@@ -35,21 +38,30 @@ predicates
 	nondeterm grandmother(name, name)
 
 clauses
-	mother(X, Y) :- parent(X, Y), woman(X).
-	father(X, Y) :- parent(X, Y), man(X).
+	mother(M, CH) :- parent(M, CH), woman(M). 			
+	father(F, CH) :- parent(F, CH), man(F).
 	
-	husband(X, Y) :- married(X, Y), man(X).
-	wife(X, Y) :- married(X, Y), woman(X).
+	husband(H, W) :- married(H, W), man(H). 			
+	wife(W, H) :- married(W, H), woman(W).
 	
-	sibship(X, Y) :- parent(Z, X), parent(Z, Y), X <> Y.
-	sister(X, Y) :- sibship(X, Y), woman(X).
-	brother(X, Y) :- sibship(X, Y), man(X).
+	sibship(SIB1, SIB2) :- parent(P, SIB1), parent(P, SIB2), 	%have same parent
+			   SIB1 <> SIB2.				%not sibship for himself
+	sister(SIS, SIB) :- sibship(SIS, SIB), woman(SIS).
+	brother(BRO, SIB) :- sibship(BRO, SIB), man(BRO).
 	
-	grandparent(X, Y) :- parent(X, Z), parent(Z, Y).
-	grandfather(X, Y) :- grandparent(X, Y), man(X).
-	grandmother(X, Y) :- grandparent(X, Y), woman(X).
+	grandparent(GP, CH) :- parent(GP, P), parent(P, CH).		%GP is parent of parent of CH
+	grandfather(GF, CH) :- grandparent(GF, CH), man(GF).
+	grandmother(GM, CH) :- grandparent(GM, CH), woman(GM).
 
 goal
-	sister(X, Y).
+	father(FATHER, CHILD).
+	
+	%married(SPOUSE1, SPOUSE2).
+	
+	%husband(HUSBAND, _).
+	
+	%sibship(SIBSHIP1, SIBSHIP2).
+	
+	%grandfather("man1", _).
 	
 
