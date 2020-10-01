@@ -1,14 +1,16 @@
-/*вариант 4*/
+/*variant 4*/
 
 domains
 	name=string
+	
 predicates
 	nondeterm dog(name)
 	nondeterm parent(name, name) 
 	nondeterm grandparent(name, name)
+	
 clauses
-	/* TODO: как нормально группировать???*/
-	dog(X) :- parent(Y, X), dog(Y). 
+	dog(CH) :- parent(P, CH), dog(P). %Parent, CHild
+
 	dog("reks").
 	dog("fat").
 	
@@ -26,17 +28,16 @@ clauses
 	parent("fat", "jim").
 	parent("fat", "bek").
 	
-	grandparent(X, Y) :- parent(X, Z), parent(Z, Y).
+	grandparent(GP, CH) :- parent(GP, P), parent(P, CH). %GRandparent, Parent, CHild
 goal
-	dog(DOG). /*TODO: узнать как сделать уникальным*/
+	dog(DOG). 			%TODO: how to get unique vals 
 	
-	/*parent(PARENT, _). */
+	%parent(PARENT, _). 
 	
-	/*grandparent(GRANDPARENT, _).*/
-	/*parent(X, _Z), parent(_Z, _Y). TODO: узнать как скыть*/
+	%parent(X, Z), parent(Z, Y). 	%TODO: how to hide Z, Y
+	%grandparent(GRANDPARENT, _).
 	
-	/*dog("bek").*/
+	%dog("bek").
 	
-	/*parent(PARENT_OF_BEK, "bek").*/
-	
-	/*parent("bek", CHILD_OF_BEK).*/	
+	%parent(PARENT_OF_BEK, "bek").
+	%parent("bek", CHILD_OF_BEK).

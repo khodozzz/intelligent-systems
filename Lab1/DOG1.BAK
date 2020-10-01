@@ -1,13 +1,43 @@
-/*****************************************************************************
+/*var 4*/
 
-		Copyright (c) My Company
+domains
+	name=string
+	
+predicates
+	nondeterm dog(name)
+	nondeterm parent(name, name) 
+	nondeterm grandparent(name, name)
+	
+clauses
+	dog(CH) :- parent(P, CH), dog(P). %Parent, CHild
 
- Project:  LAB1
- FileName: DOG1.PRO
- Purpose: No description
- Written by: Visual Prolog
- Comments:
-******************************************************************************/
+	dog("reks").
+	dog("fat").
+	
 
-include "lab1.inc"
+	parent("reks", "boss").
+	parent("reks", "jim").
+	
+	parent("boss", "jim").
+	parent("boss", "jek").
 
+	parent("jek", "sally").
+	
+	parent("sally", "bek").
+	
+	parent("fat", "jim").
+	parent("fat", "bek").
+	
+	grandparent(GP, CH) :- parent(GP, P), parent(P, CH). %GRandparent, Parent, CHild
+goal
+	dog(DOG). %TODO: how to get unique
+	
+	%parent(PARENT, _). 
+	
+	%grandparent(GRANDPARENT, _).
+	%parent(X, Z), parent(Z, Y). %TODO: how to hide Z, Y
+	
+	%dog("bek").
+	
+	%parent(PARENT_OF_BEK, "bek").
+	%parent("bek", CHILD_OF_BEK).
